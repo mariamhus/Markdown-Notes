@@ -1,0 +1,297 @@
+@import "@fontsource-variable/public-sans";
+@import "@fontsource-variable/newsreader";
+@import "@fontsource-variable/jetbrains-mono";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Public Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Newsreader Variable", Georgia, serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "Cascadia Code", Menlo, monospace;
+  --color-bg: var(--bg);
+  --color-paper: var(--paper);
+  --color-sidebar: var(--sidebar);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-marker: var(--marker);
+  --color-danger: var(--danger);
+}
+
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --paper: #fbfbfa;
+  --sidebar: #f1f2f4;
+  --ink: #1b1d22;
+  --muted: #5f6570;
+  --line: #dfe2e6;
+  --marker: #ffd84d;
+  --marker-soft: rgb(255 216 77 / 0.55);
+  --danger: #c0342b;
+  --code-bg: #f1f2f4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #17181c;
+    --paper: #1b1c21;
+    --sidebar: #111215;
+    --ink: #e8e9ec;
+    --muted: #9ba0aa;
+    --line: #2b2d33;
+    --marker: #f2c94c;
+    --marker-soft: rgb(242 201 76 / 0.32);
+    --danger: #f2786f;
+    --code-bg: #24262c;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #17181c;
+  --paper: #1b1c21;
+  --sidebar: #111215;
+  --ink: #e8e9ec;
+  --muted: #9ba0aa;
+  --line: #2b2d33;
+  --marker: #f2c94c;
+  --marker-soft: rgb(242 201 76 / 0.32);
+  --danger: #f2786f;
+  --code-bg: #24262c;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--marker-soft);
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+@layer components {
+  .field {
+    @apply rounded-lg border border-line bg-bg text-[15px] text-ink placeholder:text-muted focus:border-ink focus:outline-none;
+  }
+
+  .icon-button {
+    @apply grid size-9 shrink-0 place-items-center rounded-lg text-muted transition-colors hover:bg-ink/8 hover:text-ink disabled:opacity-35 disabled:hover:bg-transparent aria-pressed:text-ink;
+  }
+
+  .button-ink {
+    @apply inline-flex h-9 items-center gap-1.5 rounded-lg bg-ink px-3 text-sm font-semibold text-bg transition-opacity hover:opacity-85;
+  }
+
+  .tag-chip {
+    @apply inline-flex items-center gap-1.5 rounded-md border border-line bg-bg px-2 py-0.5 text-[13px] font-medium transition-colors hover:border-muted aria-pressed:border-transparent aria-pressed:bg-marker aria-pressed:text-[#1b1d22];
+  }
+
+  .note-item {
+    @apply flex w-full flex-col rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-ink/5 aria-[current]:bg-bg aria-[current]:shadow-[0_1px_2px_rgb(0_0_0/0.08),inset_0_0_0_1px_var(--line)];
+  }
+
+  .note-item-title {
+    @apply line-clamp-2 font-semibold leading-snug;
+  }
+
+  .note-item[aria-current] .note-item-title {
+    background-image: linear-gradient(transparent 55%, var(--marker-soft) 55%, var(--marker-soft) 92%, transparent 92%);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .segmented {
+    @apply flex rounded-lg bg-ink/6 p-0.5;
+  }
+
+  .segment {
+    @apply inline-flex h-8 items-center gap-1.5 rounded-md px-2.5 text-sm font-medium text-muted transition-colors hover:text-ink aria-pressed:bg-bg aria-pressed:text-ink aria-pressed:shadow-[0_1px_2px_rgb(0_0_0/0.12)];
+  }
+
+  .editor-textarea {
+    @apply block h-full w-full resize-none bg-bg px-6 py-8 font-mono text-[14.5px] leading-[1.75] text-ink placeholder:text-muted focus:outline-none sm:px-10;
+    tab-size: 2;
+  }
+}
+
+.prose-note {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.prose-note > :first-child {
+  margin-top: 0;
+}
+
+.prose-note h1,
+.prose-note h2,
+.prose-note h3,
+.prose-note h4 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 1.8em 0 0.6em;
+}
+
+.prose-note h1 {
+  font-size: 2.1rem;
+  margin-top: 0;
+}
+
+.prose-note h2 {
+  font-size: 1.4rem;
+}
+
+.prose-note h3 {
+  font-size: 1.15rem;
+}
+
+.prose-note p,
+.prose-note ul,
+.prose-note ol,
+.prose-note blockquote,
+.prose-note pre,
+.prose-note table {
+  margin: 0 0 1em;
+}
+
+.prose-note ul,
+.prose-note ol {
+  padding-left: 1.4em;
+}
+
+.prose-note ul {
+  list-style: disc;
+}
+
+.prose-note ol {
+  list-style: decimal;
+}
+
+.prose-note li {
+  margin: 0.25em 0;
+}
+
+.prose-note li:has(> input[type="checkbox"]) {
+  list-style: none;
+  margin-left: -1.4em;
+}
+
+.prose-note input[type="checkbox"] {
+  width: 1.05em;
+  height: 1.05em;
+  margin: 0 0.5em 0 0;
+  vertical-align: -0.12em;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+
+.prose-note li:has(> input:checked) {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent);
+}
+
+.prose-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--marker);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.prose-note strong {
+  font-weight: 650;
+}
+
+.prose-note blockquote {
+  border-left: 3px solid var(--marker);
+  padding-left: 1em;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.prose-note code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--code-bg);
+  border-radius: 0.3rem;
+  padding: 0.12em 0.35em;
+}
+
+.prose-note pre {
+  overflow-x: auto;
+  border-radius: 0.6rem;
+  background: var(--code-bg);
+  padding: 1em 1.1em;
+  line-height: 1.55;
+}
+
+.prose-note pre code {
+  background: none;
+  padding: 0;
+}
+
+.prose-note hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2em 0;
+}
+
+.prose-note table {
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+}
+
+.prose-note th,
+.prose-note td {
+  border: 1px solid var(--line);
+  padding: 0.4em 0.7em;
+  text-align: left;
+}
+
+.prose-note img {
+  max-width: 100%;
+  border-radius: 0.5rem;
+}
+
+.prose-note .prose-empty {
+  color: var(--muted);
+  font-style: italic;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toast {
+    animation: toast-in 200ms ease-out;
+  }
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+}
