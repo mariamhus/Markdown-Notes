@@ -2,7 +2,7 @@
 
 A notes app with a live Markdown preview, built with React, TypeScript, and Tailwind CSS. Write on one side and see the formatted note on the other, organize notes with hashtags, tick off checklists right in the preview, and export any note as a `.md` file. Everything is saved in the browser.
 
-**Live demo:** _add your Vercel link here_
+**Live demo:** [_add your Vercel link here_](https://markdown-notes-hazel.vercel.app/)
 
 ![Screenshot](./screenshot.png)
 
